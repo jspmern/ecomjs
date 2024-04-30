@@ -123,7 +123,29 @@ let product=[
 const searchParams = new URLSearchParams(window.location.search);
 let searchId=searchParams.get('id');
 let details=document.getElementById('details')
+let cart=[]
+function setItem(data)
+{
+    localStorage.setItem('ecom',JSON.stringify(data))
+}
+function getItem()
+{
+       return localStorage.getItem('ecom')?JSON.parse(localStorage.getItem('ecom')):[]
+}
+function cartHandler(data)
+{
+    let findCartData=product.find((item)=>{
+        return item.id==data
+      }) 
+      console.log(findCartData)
+       cart=getItem()
+      cart.push(findCartData)
+       setItem(cart)
+       window.location.reload()
+     
+}
 print()
+
 function print()
 {
       let findData=product.find((item)=>{
@@ -135,7 +157,7 @@ function print()
            str+=` <div class="col-md-5 ">
            <img src="${findData.images[0]}" class="img-fluid"  style="height: 270px;"/>
            <div class=" m-3">
-               <button class="btn btn-primary" id="cart">AddToCart</button>
+               <button class="btn btn-primary" id="cart" onclick="cartHandler(${findData.id})">AddToCart</button>
            </div>
          
         </div>
