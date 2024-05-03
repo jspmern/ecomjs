@@ -123,7 +123,9 @@ let product=[
 let filter={
     sort:'1_10',
     brand:'',
-    category:''
+    category:'',
+    max:1001,
+    min:11
 }
 let content=document.getElementById('content')
 let category=document.getElementById('category')
@@ -131,6 +133,7 @@ let brand=document.getElementById('brand')
 let search=document.getElementById('search')
 let sort=document.getElementById('sort')
 let clear=document.getElementById('clear')
+let price=document.getElementById('price')
  //this is for the searching
  search.addEventListener('keyup',searchHandler)
  search.addEventListener('search',()=>{
@@ -227,6 +230,13 @@ sort.addEventListener('change',sortHandler)
         filterHandler()
   }
 
+  price.addEventListener('change',()=>{
+    filter.max=price.value
+    let rangeData=document.getElementById('rangeData')
+    rangeData.innerText=price.value
+    filterHandler()
+  })
+
   //this is for filteration
   function filterHandler()
   {
@@ -283,12 +293,17 @@ sort.addEventListener('change',sortHandler)
             return item.category==filter.category
         })
      }
+     if(filter.max || filter.min)
+        {
+            filterArray=filterArray.filter((item)=>{
+                return (item.price<filter.max)
+            })
+        }
       print(filterArray)
   }
   
   //this is for the clear filter
   clear.addEventListener('click',()=>{
-    console.log('fddfkj')
     window.location.reload()
   })
 
